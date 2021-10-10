@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, RouterProps, withRouter } from "react-router-dom";
+import { RouterProps, withRouter } from "react-router-dom";
 import ChatPage from "@pages/chat";
 import { compose } from "redux";
 import ChatProvider from "@app/providers/chat";

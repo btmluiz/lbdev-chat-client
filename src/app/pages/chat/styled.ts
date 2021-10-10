@@ -6,7 +6,6 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import theme from "@theme";
 import { green, red, yellow } from "@mui/material/colors";
 
 export const Root = styled("div")(({ theme }) => ({
@@ -37,24 +36,24 @@ export const Container = styled(Paper)(({ theme, elevation = 0 }) => ({
   },
 }));
 
-export const Wrapper = styled("div")((theme) => ({
+export const Wrapper = styled("div")(() => ({
   width: "100%",
   height: "100%",
   display: "flex",
 }));
 
-export const LeftSide = styled("div")((theme) => ({
+export const LeftSide = styled("div")(() => ({
   width: "30%",
   height: "100%",
   position: "relative",
 }));
 
-export const RightSide = styled("div")((theme) => ({
+export const RightSide = styled("div")(() => ({
   width: "100%",
   height: "100%",
 }));
 
-export const Menu = styled("div")((theme) => ({
+export const Menu = styled("div")(() => ({
   width: "100%",
 }));
 
@@ -111,34 +110,32 @@ type StatusBadgeProps = {
   status: "connected" | "disconnected" | "reconnecting";
 };
 
-export const StatusBadge = styled("div")<StatusBadgeProps>(
-  ({ theme, status }) => {
-    let color;
+export const StatusBadge = styled("div")<StatusBadgeProps>(({ status }) => {
+  let color;
 
-    if (status === "connected") {
-    }
-    switch (status) {
-      case "connected":
-        color = green.A400;
-        break;
-      case "disconnected":
-        color = red.A400;
-        break;
-      case "reconnecting":
-        color = yellow["700"];
-        break;
-    }
-
-    return {
-      width: 13,
-      height: 13,
-      backgroundColor: color,
-      borderRadius: "100%",
-    };
+  if (status === "connected") {
   }
-);
+  switch (status) {
+    case "connected":
+      color = green.A400;
+      break;
+    case "disconnected":
+      color = red.A400;
+      break;
+    case "reconnecting":
+      color = yellow["700"];
+      break;
+  }
 
-export const StatusTypography = styled(Typography)(({ theme }) => ({
+  return {
+    width: 13,
+    height: 13,
+    backgroundColor: color,
+    borderRadius: "100%",
+  };
+});
+
+export const StatusTypography = styled(Typography)(() => ({
   display: "flex",
   alignItem: "center",
 }));

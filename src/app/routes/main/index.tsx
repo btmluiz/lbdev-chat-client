@@ -3,7 +3,6 @@ import { Route, RouterProps, withRouter } from "react-router-dom";
 import HomePage from "@pages/home";
 import { compose } from "redux";
 import LoginPage from "@pages/login";
-import ChatPage from "@pages/chat";
 import NavigationService from "@services/navigation";
 import ChatRoute from "@routes/chat";
 
