@@ -1,0 +1,26 @@
+html, body, #root {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body > div {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-resizer {
+    display: none;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 50%;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #323232;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #605b5b;
+  }
+}
