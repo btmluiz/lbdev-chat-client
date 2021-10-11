@@ -17,13 +17,21 @@ class ContactMessage extends React.Component<Props, State> {
   static contextType = ChatContext;
   messageRef = React.createRef<HTMLInputElement>();
 
-  constructor(props: Props) {
-    super(props);
-
-    this.onSubmit = this.onSubmit.bind(this);
+  componentDidMount() {
+    document.addEventListener("keypress", this.focusMessageInput);
   }
 
-  private onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  focusMessageInput = () => {
+    if (this.messageRef.current) {
+      this.messageRef.current.focus();
+    }
+  };
+
+  componentWillUnmount() {
+    document.removeEventListener("keypress", this.focusMessageInput);
+  }
+
+  private onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.preventDefault();
 
@@ -39,7 +47,7 @@ class ContactMessage extends React.Component<Props, State> {
       }
       messageInput.value = "";
     }
-  }
+  };
 
   render() {
     const {
@@ -50,7 +58,7 @@ class ContactMessage extends React.Component<Props, State> {
     const messages: Message[] = contextMessages[contact.pk] ?? [];
 
     messages.sort((a, b) => {
-      return b.time.getTime() - a.time.getTime();
+      return a.time.getTime() - b.time.getTime();
     });
 
     return (
