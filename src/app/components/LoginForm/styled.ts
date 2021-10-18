@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import { motion } from "framer-motion";
 
 export const Form = styled("form")(({ theme }) => ({
   height: "100%",
@@ -6,22 +7,8 @@ export const Form = styled("form")(({ theme }) => ({
   flexDirection: "column",
 }));
 
-export const Header = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 0, 1, 0),
-}));
-
-export const Body = styled("div")(({ theme }) => ({
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  padding: theme.spacing(1, 0, 0),
-}));
-
-export const Footer = styled("div")(({ theme }) => ({}));
-
-export const InputRow = styled("div")(({ theme }) => ({
-  padding: theme.spacing(1, 0, 0),
+export const InputRow = styled(motion.div)(({ theme }) => ({
+  padding: theme.spacing(0.75, 0),
 }));
 
 export const ButtonGroup = styled("div")(({ theme }) => ({

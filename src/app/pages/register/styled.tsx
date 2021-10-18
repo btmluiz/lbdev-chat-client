@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Paper, styled } from "@mui/material";
 import { motion } from "framer-motion";
 
 export const Root = styled(motion.div)(({ theme }) => ({

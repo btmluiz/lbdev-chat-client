@@ -1,13 +1,23 @@
 import React from "react";
 import * as Styled from "@components/LoginForm/styled";
-import { Button, Divider, TextField, Typography } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigation } from "@hooks/navigate";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 
 type Props = {
   onSubmit: (data: any) => any;
+  submitting: boolean;
+  register: boolean;
+  setRegister: (value: boolean) => void;
 };
 
-const LoginForm: React.FC<Props> = ({ onSubmit }) => {
+const LoginForm: React.FC<Props> = ({
+  onSubmit,
+  submitting,
+  register,
+  setRegister,
+}) => {
   const {
     handleSubmit,
     control,
@@ -30,34 +40,115 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
     if (errors[field] && errors[field].message) {
       return errors[field].message;
     } else {
-      return " ";
+      return "";
     }
   };
 
   return (
-    <Styled.Form onSubmit={handleSubmit(submit)}>
-      <Styled.Header>
-        <Typography>LoginPage</Typography>
-      </Styled.Header>
-      <Divider />
-      <Styled.Body>
+    <AnimateSharedLayout>
+      <Styled.Form onSubmit={handleSubmit(submit)}>
         <Styled.InputRow>
           <Controller
             name={"username"}
             control={control}
             defaultValue={""}
             render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                type={"text"}
-                label={"Username"}
-                error={!!errors.username}
-                helperText={getError("username")}
-              />
+              <motion.div>
+                <TextField
+                  {...field}
+                  fullWidth
+                  type={"text"}
+                  label={"Username"}
+                  error={!!errors.username}
+                  helperText={getError("username")}
+                />
+              </motion.div>
             )}
           />
         </Styled.InputRow>
+        <motion.div layout>
+          <AnimatePresence>
+            {register ? (
+              <motion.div
+                layout
+                initial={{ height: 0 }}
+                animate={{ height: "auto", overflow: "hidden" }}
+                exit={{ height: 0 }}
+                transition={{ duration: 0.9 }}
+              >
+                <Styled.InputRow
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Controller
+                    name={"first_name"}
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        type={"text"}
+                        label={"First name"}
+                        disabled={submitting}
+                        error={!!errors.first_name}
+                        helperText={getError("first_name")}
+                      />
+                    )}
+                  />
+                </Styled.InputRow>
+                <Styled.InputRow
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Controller
+                    name={"last_name"}
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        type={"text"}
+                        label={"Last name"}
+                        disabled={submitting}
+                        error={!!errors.last_name}
+                        helperText={getError("last_name")}
+                      />
+                    )}
+                  />
+                </Styled.InputRow>
+                <Styled.InputRow
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.9 }}
+                >
+                  <Controller
+                    name={"email"}
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        type={"email"}
+                        label={"Email"}
+                        disabled={submitting}
+                        error={!!errors.email}
+                        helperText={getError("email")}
+                      />
+                    )}
+                  />
+                </Styled.InputRow>
+              </motion.div>
+            ) : undefined}
+          </AnimatePresence>
+        </motion.div>
         <Styled.InputRow>
           <Controller
             name={"password"}
@@ -75,18 +166,43 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
             )}
           />
         </Styled.InputRow>
-        <Styled.ButtonGroup>
-          <Styled.LeftButton>
-            <Button size={"small"} variant={"text"}>
-              Forgot password
-            </Button>
-          </Styled.LeftButton>
-          <Styled.RightButton>
-            <Button size={"small"} variant={"text"}>
-              Signup
-            </Button>
-          </Styled.RightButton>
-        </Styled.ButtonGroup>
+
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: "auto", overflow: "hidden" }}
+          exit={{ height: 0 }}
+          transition={{ duration: 2 }}
+        >
+          {!register && (
+            <Styled.ButtonGroup>
+              <Styled.LeftButton>
+                <Button size={"small"} variant={"text"}>
+                  Forgot password
+                </Button>
+              </Styled.LeftButton>
+              <Styled.RightButton>
+                <Button
+                  size={"small"}
+                  variant={"text"}
+                  onClick={() => setRegister(true)}
+                >
+                  <motion.div
+                    layoutId={"register"}
+                    className="outline"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30,
+                    }}
+                  >
+                    Register
+                  </motion.div>
+                </Button>
+              </Styled.RightButton>
+            </Styled.ButtonGroup>
+          )}
+        </motion.div>
         <Styled.ButtonGroup>
           <Button
             fullWidth
@@ -95,11 +211,26 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
             variant={"contained"}
             type={"submit"}
           >
-            Login
+            {register ? (
+              <motion.div
+                layoutId={"register"}
+                className="outline"
+                initial={false}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 30,
+                }}
+              >
+                Register
+              </motion.div>
+            ) : (
+              "Login"
+            )}
           </Button>
         </Styled.ButtonGroup>
-      </Styled.Body>
-    </Styled.Form>
+      </Styled.Form>
+    </AnimateSharedLayout>
   );
 };
 

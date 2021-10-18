@@ -4,7 +4,7 @@ import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "@store";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import MainRoute from "@routes/main";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "@theme";
@@ -19,9 +19,7 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <Switch>
-            <MainRoute />
-          </Switch>
+          <MainRoute />
         </BrowserRouter>
       </ThemeProvider>
     </Provider>

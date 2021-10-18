@@ -1,12 +1,15 @@
 import React from "react";
-import { Route, RouterProps, withRouter } from "react-router-dom";
+import { Route, RouterProps, Switch, withRouter } from "react-router-dom";
 import HomePage from "@pages/home";
 import { compose } from "redux";
-import LoginPage from "@pages/login";
 import NavigationService from "@services/navigation";
+import { AnimatePresence } from "framer-motion";
 import ChatRoute from "@routes/chat";
+import { LocationProps, withLocation } from "@hooks/location";
+import AuthRouter from "@routes/auth";
+import NewAuthPage from "@pages/new-auth";
 
-type Props = RouterProps & {};
+type Props = RouterProps & LocationProps & {};
 
 class MainRoute extends React.PureComponent<Props> {
   constructor(props: Props) {
@@ -16,14 +19,19 @@ class MainRoute extends React.PureComponent<Props> {
   }
 
   render() {
+    const {
+      props: { location },
+    } = this;
     return (
       <>
-        <Route path={"/"} exact component={HomePage} />
-        <Route path={"/login"} exact component={LoginPage} />
-        <Route path={"/chat"} exact component={ChatRoute} />
+        <Switch>
+          <Route path={"/"} exact component={HomePage} />
+          <Route path={"/chat"} exact component={ChatRoute} />
+          <Route path={"/auth"} component={NewAuthPage} />
+        </Switch>
       </>
     );
   }
 }
 
-export default compose<any>(withRouter)(MainRoute);
+export default compose<any>(withRouter, withLocation)(MainRoute);
